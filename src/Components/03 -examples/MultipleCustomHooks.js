@@ -1,15 +1,16 @@
 import React from "react";
+import useCounter from "../../hooks/useCounter";
 import useFetch from "../../hooks/useFetch";
 import "./styles.css";
 
 const MultipleCustomHooks = () => {
+  const { counter, increment } = useCounter(1);
+
   const { loading, data } = useFetch(
-    `https://www.breakingbadapi.com/api/quotes/1`
+    `https://www.breakingbadapi.com/api/quotes/${counter}`
   );
 
-  console.log("data", data);
   const { quote, author, series } = !!data && data[0];
-  console.log(quote, author, series);
 
   return (
     <>
@@ -23,11 +24,11 @@ const MultipleCustomHooks = () => {
           <footer className="blockquote-footer">
             {author} | {series}
           </footer>
-          <button className="btn btn-primary text-capitalize">
-            next quote
-          </button>
         </blockquote>
       )}
+      <button className="btn btn-primary text-capitalize" onClick={increment}>
+        next quote
+      </button>
     </>
   );
 };
